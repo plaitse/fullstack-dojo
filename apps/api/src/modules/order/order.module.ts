@@ -1,16 +1,32 @@
 import { Module } from '@nestjs/common';
 import { ORDER_REPOSITORY } from './domain/ports/order.repository';
-import { InMemoryOrderRepository } from './infrastructure/in-memory-order.repository';
+import { PrismaOrderRepository } from './infrastructure/prisma-order.repository';
 import { CreateOrderUseCase } from './application/create-order.use-case';
+import { GetOrderUseCase } from './application/get-order.use-case';
+import { ListOrdersUseCase } from './application/list-orders.use-case';
+import { TransitionOrderUseCase } from './application/transition-order.use-case';
+import { OrderStatsQuery } from './application/order-stats.query';
+import { OrderEventHandlers } from './infrastructure/event-handlers/order-event.handlers';
 
 @Module({
   providers: [
     {
       provide: ORDER_REPOSITORY,
-      useClass: InMemoryOrderRepository,
+      useClass: PrismaOrderRepository,
     },
     CreateOrderUseCase,
+    GetOrderUseCase,
+    ListOrdersUseCase,
+    TransitionOrderUseCase,
+    OrderStatsQuery,
+    OrderEventHandlers,
   ],
-  exports: [CreateOrderUseCase],
+  exports: [
+    CreateOrderUseCase,
+    GetOrderUseCase,
+    ListOrdersUseCase,
+    TransitionOrderUseCase,
+    OrderStatsQuery,
+  ],
 })
 export class OrderModule {}

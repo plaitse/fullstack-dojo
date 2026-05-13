@@ -2,3 +2,5 @@ packages:
   - "apps/*"
 allowBuilds:
   '@nestjs/core': true
+  '@prisma/engines': true
+  prisma: true
