@@ -1,7 +1,9 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, Optional, Inject, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
+
+export const DATABASE_URL_TOKEN = Symbol('DATABASE_URL');
 
 @Injectable()
 export class PrismaService
@@ -10,7 +12,7 @@ export class PrismaService
 {
   private readonly pool: Pool;
 
-  constructor(url?: string) {
+  constructor(@Optional() @Inject(DATABASE_URL_TOKEN) url?: string) {
     const connectionString =
       url ?? process.env.DATABASE_URL ?? 'postgresql://dojo:dojo@localhost:5433/fullstack_dojo';
     const pool = new Pool({ connectionString });

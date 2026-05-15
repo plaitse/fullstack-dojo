@@ -7,8 +7,10 @@ import { ListOrdersUseCase } from './application/list-orders.use-case';
 import { TransitionOrderUseCase } from './application/transition-order.use-case';
 import { OrderStatsQuery } from './application/order-stats.query';
 import { OrderEventHandlers } from './infrastructure/event-handlers/order-event.handlers';
+import { OrderController } from './infrastructure/http/order.controller';
 
 @Module({
+  controllers: [OrderController],
   providers: [
     {
       provide: ORDER_REPOSITORY,
